@@ -1,0 +1,362 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0a3d7a;
+  --color-navy-deep: #06254a;
+  --color-ink: #04182f;
+  --color-cyan: #00aeef;
+  --color-cyan-deep: #0077a8;
+  --color-cyan-soft: #d7f2fd;
+  --color-alert: #e31e24;
+  --color-alert-deep: #a8141a;
+  --color-paper: #f8f9fa;
+  --color-hair: #dce5ef;
+  --color-steel: #5a7599;
+  --color-leaf: #12833f;
+
+  --font-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  --ease-plate: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root {
+  color-scheme: light;
+  --r-card: 1.25rem;
+  --r-input: 0.9rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* ── Signature micro-label ───────────────────────────────────────────── */
+.plate-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Modern button system: pills + Lucide icons ─────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1.5px solid transparent;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.95rem 1.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(4, 24, 47, 0.06);
+  transition:
+    transform 0.18s var(--ease-plate),
+    box-shadow 0.18s var(--ease-plate),
+    background-color 0.18s var(--ease-plate),
+    color 0.18s var(--ease-plate),
+    border-color 0.18s var(--ease-plate);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px -16px rgba(6, 37, 74, 0.65);
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.btn svg {
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: var(--color-navy);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-cyan);
+  color: var(--color-navy-deep);
+}
+
+.btn-accent {
+  background: var(--color-cyan);
+  color: var(--color-navy-deep);
+}
+.btn-accent:hover {
+  background: var(--color-navy);
+  color: #fff;
+}
+
+.btn-outline {
+  background: #fff;
+  color: var(--color-navy);
+  border-color: var(--color-hair);
+}
+.btn-outline:hover {
+  border-color: var(--color-navy);
+  color: var(--color-navy-deep);
+}
+
+.btn-alert {
+  background: var(--color-alert);
+  color: #fff;
+}
+.btn-alert:hover {
+  background: var(--color-alert-deep);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-navy);
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn-ghost:hover {
+  background: var(--color-cyan-soft);
+  box-shadow: none;
+}
+
+.btn-light {
+  background: #fff;
+  color: var(--color-alert);
+}
+.btn-light:hover {
+  background: var(--color-navy-deep);
+  color: #fff;
+}
+
+.btn-lg {
+  padding: 1.1rem 1.9rem;
+  font-size: 0.875rem;
+}
+.btn-sm {
+  padding: 0.65rem 1.05rem;
+  font-size: 0.72rem;
+}
+.btn-block {
+  width: 100%;
+}
+
+/* ── Cards & surfaces ───────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 1px solid var(--color-hair);
+  border-radius: var(--r-card);
+  transition:
+    transform 0.2s var(--ease-plate),
+    box-shadow 0.2s var(--ease-plate),
+    border-color 0.2s var(--ease-plate);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: #bcd7ee;
+  box-shadow: 0 22px 44px -28px rgba(6, 37, 74, 0.55);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-hair);
+  background: #fff;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Form controls ──────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  border-radius: var(--r-input);
+  border: 1.5px solid var(--color-hair);
+  background: #fff;
+  padding: 0.8rem 1rem;
+  font-size: 15px;
+  color: var(--color-ink);
+  transition:
+    border-color 0.15s var(--ease-plate),
+    box-shadow 0.15s var(--ease-plate);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 4px rgba(0, 174, 239, 0.16);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+@keyframes sbi-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(227, 30, 36, 0.55);
+  }
+  60% {
+    box-shadow: 0 0 0 14px rgba(227, 30, 36, 0);
+  }
+}
+.pulse-alert {
+  animation: sbi-pulse 1.8s var(--ease-plate) infinite;
+}
+
+@keyframes sbi-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e6edf5;
+  border-radius: 999px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  animation: sbi-shimmer 1.4s infinite;
+}
+
+/* ── Admin: one CSS pass modernises every control ───────────────────── */
+[data-admin] input:not([type="color"]),
+[data-admin] select,
+[data-admin] textarea {
+  border-radius: var(--r-input) !important;
+}
+[data-admin] button:not(.btn):not(.leaflet-container button) {
+  border-radius: 9999px;
+}
+[data-admin] .card,
+[data-admin] table {
+  border-radius: var(--r-card);
+}
+[data-admin] nav[aria-label="Admin sections"] button {
+  border-radius: 0;
+}
+[data-admin] input:not([type="color"]),
+[data-admin] select,
+[data-admin] textarea,
+[data-wizard] input:not([type="color"]),
+[data-wizard] select,
+[data-wizard] textarea {
+  border-radius: 0.9rem !important;
+}
+[data-wizard] input:focus,
+[data-wizard] select:focus,
+[data-wizard] textarea:focus,
+[data-admin] input:focus,
+[data-admin] select:focus,
+[data-admin] textarea:focus {
+  border-color: var(--color-cyan) !important;
+  box-shadow: 0 0 0 4px rgba(0, 174, 239, 0.18);
+}
+
+/* ── Leaflet chrome ─────────────────────────────────────────────────── */
+.leaflet-container {
+  background: #eff5fb;
+  font-family: var(--font-body);
+  z-index: 0;
+}
+.sbi-div-icon {
+  background: transparent;
+  border: none;
+}
+.leaflet-bar a {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  font-size: 20px !important;
+  color: #0a3d7a !important;
+  border-radius: 9999px !important;
+  margin-bottom: 6px;
+  border: 1px solid #dce5ef !important;
+}
+.leaflet-bar a:hover {
+  color: #0077a8 !important;
+  background: #fff !important;
+}
+.leaflet-bar {
+  border: none !important;
+  box-shadow: 0 10px 24px -14px rgba(6, 37, 74, 0.6) !important;
+  border-radius: 9999px !important;
+}
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 8px 0 0 0;
+}
+.leaflet-tooltip {
+  border-radius: 9999px !important;
+  border: 1px solid #dce5ef !important;
+  box-shadow: 0 10px 24px -14px rgba(6, 37, 74, 0.6) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
