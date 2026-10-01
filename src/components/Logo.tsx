@@ -13,7 +13,7 @@ interface LogoProps {
  */
 export function Logo({ className = "", src, showWordmark = true, tone = "dark" }: LogoProps) {
   if (src?.trim()) {
-    const imageSrc = /^https?:\/\//i.test(src) || src.startsWith("/") ? src : `/${src}`;
+    const imageSrc = /^(https?:|data:image\/|blob:)/i.test(src) || src.startsWith("/") ? src : `/${src}`;
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img

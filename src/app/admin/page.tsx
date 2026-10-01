@@ -616,7 +616,8 @@ export default function AdminPage() {
                   accept="image/*"
                   multiple={false}
                   previewFit="contain"
-                  hint="Square PNG, JPG, WebP, or SVG recommended. 25 MB maximum. Display sizes: header 48–56 px, footer 96–128 px, optional hero 64–80 px."
+                  inlineMaxBytes={3 * 1024 * 1024}
+                  hint="PNG, JPG, WebP, or SVG; uploaded as-is (never cropped or redrawn). 3 MB maximum. Display sizes: header 48–56 px, footer 96–128 px, optional hero 64–80 px."
                 />
               </div>
               <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 text-[14px] font-semibold text-navy">
