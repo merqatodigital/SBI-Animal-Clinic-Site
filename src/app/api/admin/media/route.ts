@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { mkdir, unlink, writeFile } from "fs/promises";
 import path from "path";
-import { db } from "@/db";
+import { db, databaseAvailable } from "@/db";
 import { mediaAssets } from "@/db/schema";
 import { isAdminRequest, unauthorized } from "@/lib/admin-auth";
+import { dbUnavailable, withStatic } from "@/lib/admin-static";
 
 export const dynamic = "force-dynamic";
 
@@ -20,8 +21,15 @@ function kindOf(mime: string) {
 /** GET /api/admin/media — library listing. */
 export async function GET(req: NextRequest) {
   if (!(await isAdminRequest(req))) return unauthorized();
-  const rows = await db.select().from(mediaAssets).orderBy(mediaAssets.id);
-  return NextResponse.json({ media: rows.reverse() });
+  // Static mode: nothing has been uploaded (no database to index against).
+  if (!databaseAvailable) return withStatic({ media: [] });
+  try {
+    const rows = await db.select().from(mediaAssets).orderBy(mediaAssets.id);
+    return NextResponse.json({ media: rows.reverse() });
+  } catch (err) {
+    console.error("admin media query failed", err);
+    return withStatic({ media: [] });
+  }
 }
 
 /**
@@ -30,6 +38,10 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   if (!(await isAdminRequest(req))) return unauthorized();
+  // Refuse before touching the filesystem: serverless hosts have no durable
+  // public/uploads, and the library row needs a database anyway.
+  if (!databaseAvailable) return dbUnavailable();
+
   const form = await req.formData().catch(() => null);
   if (!form) return NextResponse.json({ error: "Invalid upload." }, { status: 400 });
   const files = form.getAll("files").filter((f): f is File => f instanceof File);
@@ -66,6 +78,7 @@ export async function POST(req: NextRequest) {
 /** DELETE /api/admin/media?id=3 — removes the DB row and the file. */
 export async function DELETE(req: NextRequest) {
   if (!(await isAdminRequest(req))) return unauthorized();
+  if (!databaseAvailable) return dbUnavailable();
   const id = Number(new URL(req.url).searchParams.get("id"));
   if (!id) return NextResponse.json({ error: "id is required" }, { status: 400 });
   const [row] = await db.select().from(mediaAssets).where(eq(mediaAssets.id, id)).limit(1);

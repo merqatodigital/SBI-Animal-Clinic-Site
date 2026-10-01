@@ -478,6 +478,16 @@ export default function AdminPage() {
         </div>
       )}
 
+      {overview?.staticMode && (
+        <div className="mx-auto max-w-[1400px] px-4 pt-4 sm:px-6" role="status">
+          <p className="border-l-4 border-alert bg-white px-4 py-3 text-[14px] font-semibold text-navy shadow-sm">
+            Read-only — no database connected yet (DATABASE_URL is unset). You are looking at the
+            same built-in content the live site serves; saving stays disabled until Postgres/Neon
+            is attached and the app is redeployed.
+          </p>
+        </div>
+      )}
+
       <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6">
         {/* ── OVERVIEW ─────────────────────────────────────────────── */}
         {tab === "overview" && (
