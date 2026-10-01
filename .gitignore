@@ -29,3 +29,5 @@ next-env.d.ts
 
 # uploaded media (runtime)
 /public/uploads/
+.vercel
+.env*
