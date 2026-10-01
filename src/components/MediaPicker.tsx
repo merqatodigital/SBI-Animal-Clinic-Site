@@ -16,7 +16,7 @@ function authHeaders(): HeadersInit {
 }
 
 function mediaSrc(url: string) {
-  return /^https?:\/\//i.test(url) || url.startsWith("/") ? url : `/${url}`;
+  return /^(https?:|data:)/i.test(url) || url.startsWith("/") ? url : `/${url}`;
 }
 
 /**
@@ -31,6 +31,7 @@ export function MediaPicker({
   hint,
   previewFit = "cover",
   multiple = true,
+  inlineMaxBytes,
 }: {
   label: string;
   value: string;
@@ -39,6 +40,13 @@ export function MediaPicker({
   hint?: string;
   previewFit?: "cover" | "contain";
   multiple?: boolean;
+  /**
+   * When set, a device upload is stored inline: the original file bytes are
+   * embedded unchanged as a data URL in the saved setting (no re-encoding,
+   * cropping or resizing). This works on read-only hosts such as Vercel,
+   * where files cannot be written to public/uploads at runtime.
+   */
+  inlineMaxBytes?: number;
 }) {
   const [library, setLibrary] = useState<MediaAsset[]>([]);
   const [open, setOpen] = useState(false);
@@ -63,9 +71,38 @@ export function MediaPicker({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open ]);
 
+  async function uploadInline(file: File, maxBytes: number) {
+    if (!file.type.startsWith("image/")) {
+      alert("Please choose an image file (PNG, JPG, WebP, GIF or SVG).");
+      return;
+    }
+    if (file.size > maxBytes) {
+      alert(`Image is too large — ${(maxBytes / 1024 / 1024).toFixed(0)} MB maximum.`);
+      return;
+    }
+    setUploading(true);
+    try {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error("Could not read the selected file."));
+        reader.readAsDataURL(file);
+      });
+      onChange(dataUrl);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
+
   async function upload(files: FileList | File[]) {
     const list = Array.from(files).slice(0, 10);
     if (list.length === 0) return;
+    if (inlineMaxBytes) {
+      await uploadInline(list[0], inlineMaxBytes);
+      return;
+    }
     setUploading(true);
     try {
       const form = new FormData();
@@ -92,7 +129,8 @@ export function MediaPicker({
       <span className="plate-label text-steel">{label}</span>
       <div className="mt-1.5 flex flex-col gap-2 sm:flex-row">
         <input
-          value={value}
+          value={value.startsWith("data:") ? "Uploaded image (saved with settings)" : value}
+          readOnly={value.startsWith("data:")}
           onChange={(e) => onChange(e.target.value)}
           placeholder="uploads/… or https://…"
           className="h-12 flex-1 border border-hair bg-white px-3 text-[14px] text-ink focus:border-cyan focus:outline-none"
