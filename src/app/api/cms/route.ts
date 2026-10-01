@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { contentSections, faqs, siteSettings, socialLinks } from "@/db/schema";
 import {
+  DEFAULT_BRANDING,
   DEFAULT_FAQS,
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
@@ -32,6 +33,7 @@ export async function GET() {
     ]);
     const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
     return NextResponse.json({
+      branding: parse(map.branding, DEFAULT_BRANDING),
       theme: parse(map.theme, DEFAULT_THEME),
       header: parse(map.header, DEFAULT_HEADER),
       hero: parse(map.hero, DEFAULT_HERO),
@@ -43,6 +45,7 @@ export async function GET() {
   } catch (err) {
     console.error("cms aggregate failed", err);
     return NextResponse.json({
+      branding: DEFAULT_BRANDING,
       theme: DEFAULT_THEME,
       header: DEFAULT_HEADER,
       hero: DEFAULT_HERO,

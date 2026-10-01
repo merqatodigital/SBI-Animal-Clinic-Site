@@ -2,16 +2,25 @@ import { ArrowUpRight, Code2, Mail, MapPin, Phone, ChevronRight } from "lucide-r
 import { Logo } from "./Logo";
 import { SocialIcons } from "./SocialIcons";
 import { REGION_LABEL, REGION_ORDER } from "@/lib/types";
-import { DEFAULT_FOOTER, type FooterSettings, type SocialLink } from "@/lib/cms";
+import {
+  DEFAULT_BRANDING,
+  DEFAULT_FOOTER,
+  type BrandingSettings,
+  type FooterSettings,
+  type SocialLink,
+} from "@/lib/cms";
 
 export function Footer({
   footer,
   socials,
+  branding,
 }: {
   footer?: FooterSettings | null;
   socials?: SocialLink[] | null;
+  branding?: BrandingSettings | null;
 }) {
   const f = { ...DEFAULT_FOOTER, ...(footer ?? {}) };
+  const brand = { ...DEFAULT_BRANDING, ...(branding ?? {}) };
   const links = socials ?? [];
 
   return (
@@ -24,7 +33,11 @@ export function Footer({
       <div className="relative mx-auto max-w-[1400px] px-4 py-16 sm:px-6">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)_minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
-            <Logo className="h-20 w-auto" tone="light" />
+            <Logo
+              src={brand.logoUrl}
+              className={brand.logoUrl ? "h-24 w-24 object-contain sm:h-32 sm:w-32" : "h-20 w-auto"}
+              tone="light"
+            />
             <p className="mt-6 max-w-sm text-[16px] leading-relaxed text-white/75">{f.about}</p>
             {links.length > 0 && (
               <div className="mt-6">

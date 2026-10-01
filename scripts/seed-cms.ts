@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { contentSections, faqs, siteSettings, socialLinks } from "../src/db/schema";
 import {
+  DEFAULT_BRANDING,
   DEFAULT_FAQS,
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
@@ -29,6 +30,7 @@ async function upsertSetting(key: string, value: unknown) {
 }
 
 async function main() {
+  await upsertSetting("branding", DEFAULT_BRANDING);
   await upsertSetting("theme", DEFAULT_THEME);
   await upsertSetting("header", DEFAULT_HEADER);
   await upsertSetting("hero", DEFAULT_HERO);

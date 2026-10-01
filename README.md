@@ -12,7 +12,7 @@ Official website of **SBI Medical & Animal Bite Center** — urgent animal-bite 
 - **Triage wizard** — DOH exposure-category (I / II / III) intake flow with animal-type, PhilHealth membership and appointment booking
 - **SKU catalogue** — full anti-rabies inventory: PVRV/PCEC vaccines, ERIG/HRIG immunoglobulins, TT/ATS/HTIG tetanus biologics and wound-care items
 - **PhilHealth section** — accreditation and Animal Bite Package information
-- **Custom CMS** — theme, header, hero, footer, content sections, FAQs and social links editable from a built-in admin panel
+- **Custom CMS** — theme, header, hero, footer, content sections, FAQs and social links editable from a built-in admin panel; upload one site logo for header/footer and optionally the hero
 - **Runs frontend-only** — the site serves its full built-in catalogue with **no database required**; connect Postgres/Neon later to make data live (see *Database (optional)* below)
 
 ## Tech stack

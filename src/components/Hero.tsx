@@ -10,7 +10,8 @@ import {
   Clock3,
   Syringe,
 } from "lucide-react";
-import { DEFAULT_HERO, type HeroSettings } from "@/lib/cms";
+import { Logo } from "@/components/Logo";
+import { DEFAULT_BRANDING, DEFAULT_HERO, type BrandingSettings, type HeroSettings } from "@/lib/cms";
 
 const PROTOCOL = [
   {
@@ -42,8 +43,15 @@ function srcOf(u: string) {
   return u.startsWith("http") || u.startsWith("/") ? u : `/${u}`;
 }
 
-export function Hero({ hero }: { hero?: HeroSettings | null }) {
+export function Hero({
+  hero,
+  branding,
+}: {
+  hero?: HeroSettings | null;
+  branding?: BrandingSettings | null;
+}) {
   const h = { ...DEFAULT_HERO, ...(hero ?? {}) };
+  const brand = { ...DEFAULT_BRANDING, ...(branding ?? {}) };
   const img = srcOf(h.imageUrl);
   const vid = srcOf(h.videoUrl);
 
@@ -87,6 +95,12 @@ export function Hero({ hero }: { hero?: HeroSettings | null }) {
             className="absolute inset-0 bg-[radial-gradient(120%_90%_at_10%_90%,rgba(0,174,239,0.22),transparent_55%)]"
             aria-hidden="true"
           />
+
+          {brand.logoUrl && brand.showHeroLogo && (
+            <div className="absolute top-4 right-4 z-10 rounded-full bg-white p-1.5 shadow-xl sm:top-6 sm:right-6">
+              <Logo src={brand.logoUrl} className="h-16 w-16 sm:h-20 sm:w-20" />
+            </div>
+          )}
 
           {/* Content */}
           <div className="relative flex min-h-[540px] flex-col justify-end px-5 py-8 sm:min-h-[580px] sm:px-8 sm:py-10 md:min-h-[640px] md:justify-center md:px-12 md:py-14 lg:min-h-[680px] lg:px-16">
