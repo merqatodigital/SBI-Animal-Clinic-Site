@@ -86,6 +86,27 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
   return json as T;
 }
 
+/**
+ * A logo picked from a device is stored as a `data:` URL so it keeps working on
+ * read-only hosts. Printing that URL renders ~150 KB of base64 as page text, so
+ * summarise it instead. Real paths and http(s) URLs are shown verbatim.
+ */
+function describeLogoSource(url: string): string {
+  if (url.startsWith("data:image/")) {
+    const [header, payload = ""] = url.split(",");
+    const mime = (header.slice("data:".length).split(";")[0] || "image").replace(/^image\//, "");
+    const padding = payload.endsWith("==") ? 2 : payload.endsWith("=") ? 1 : 0;
+    const bytes = Math.max(0, Math.floor((payload.length * 3) / 4) - padding);
+    const size =
+      bytes >= 1024 * 1024
+        ? `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+        : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return `Uploaded file · ${mime.toUpperCase()} · ${size} · stored inline with the site settings, so no file host is needed.`;
+  }
+  if (/^(https?:|blob:|\/)/.test(url)) return url;
+  return `/${url}`;
+}
+
 function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
     <label className="block">
@@ -654,8 +675,9 @@ export default function AdminPage() {
                       {branding.logoUrl ? "Uploaded logo" : "Built-in drawn SBI mark"}
                     </span>
                     <span className="block break-all text-steel">
-                      {branding.logoUrl ||
-                        "No logo file saved yet — the header, footer and services page keep using the drawn mark until you save one below."}
+                      {branding.logoUrl
+                        ? describeLogoSource(branding.logoUrl)
+                        : "No logo file saved yet — the header, footer and services page keep using the drawn mark until you save one below."}
                     </span>
                     <span className="mt-1 block text-steel">
                       Stored in:{" "}
