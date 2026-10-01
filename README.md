@@ -119,6 +119,37 @@ Full details in [NEON_SETUP.md](./NEON_SETUP.md).
 
 Open the site and press **Ctrl/Cmd + Shift+A** (or visit any URL with `?admin=1`) to open the passkey gate. Default passkey during development: `5309`. The panel manages site settings, CMS sections, FAQs, social links, media, branches and bookings.
 
+### The site logo
+
+**Admin → Header & Hero → "Upload the official logo"** shows, at the top of the card, *exactly what
+the live site is serving right now* — your uploaded logo or the built-in drawn mark. Pick the file
+with **From device**, then press **Save site logo**; the header, footer, hero badge (optional) and
+the `/services` page all switch to it immediately.
+
+Three ways a logo can reach the site, in priority order:
+
+| # | Source | How |
+|---|--------|-----|
+| 1 | Saved setting | Admin → Header & Hero → From device / Library → **Save site logo** |
+| 2 | Repo brand file | Commit your artwork as `public/images/sbi-logo.png` (`.jpg`, `.jpeg`, `.webp`, `.svg` and `images/logo.*` also work) — used automatically whenever no logo has been saved above |
+| 3 | Built-in mark | The drawn SVG seal in `src/components/Logo.tsx`, used only when neither of the above exists |
+
+### Saving without a database
+
+Settings (logo, theme, header, hero, footer) and media uploads **save with or without Postgres**:
+
+* With `DATABASE_URL` set, they go to the `site_settings` / `media_assets` tables.
+* Without it — or whenever the database is unreachable — they are written to a local content store
+  at `.data/site-content.json` (override with `SBI_DATA_DIR`) and uploaded files land in
+  `public/uploads/`. Changes go live immediately and survive restarts; the admin panel tells you
+  which of the two places a save landed in.
+* When the database becomes reachable again, anything saved locally is pushed into it automatically
+  on the next admin load, so the two can never drift apart.
+
+Branches, FAQs, sections, socials and bookings still require Postgres — those routes return a clear
+503 explaining what to do. On hosts with a read-only filesystem (e.g. Vercel without a database),
+use the drop-in repo file above instead, or connect `DATABASE_URL`.
+
 ---
 
 © SBI Medical & Animal Bite Center.

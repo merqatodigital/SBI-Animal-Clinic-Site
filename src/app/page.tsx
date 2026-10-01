@@ -13,60 +13,36 @@ import { ThemeInjector } from "@/components/ThemeInjector";
 import { AdminShortcut } from "@/components/AdminShortcut";
 import { AdminOverlay } from "@/components/AdminOverlay";
 import { db } from "@/db";
-import { branches, contentSections, executives, faqs, services, siteSettings, socialLinks } from "@/db/schema";
+import { branches, contentSections, executives, faqs, services, socialLinks } from "@/db/schema";
 import { BRANCHES, EXECUTIVES, SERVICES } from "@/lib/catalog";
-import {
-  DEFAULT_BRANDING,
-  DEFAULT_FAQS,
-  DEFAULT_FOOTER,
-  DEFAULT_HEADER,
-  DEFAULT_HERO,
-  DEFAULT_SOCIALS,
-  DEFAULT_THEME,
-  type BrandingSettings,
-  type CmsSection,
-  type Faq,
-  type FooterSettings,
-  type HeaderSettings,
-  type HeroSettings,
-  type SocialLink,
-  type ThemeSettings,
-} from "@/lib/cms";
+import { DEFAULT_FAQS, DEFAULT_SOCIALS, type CmsSection, type Faq, type SocialLink } from "@/lib/cms";
+import { loadSiteContent } from "@/lib/site-content";
 import type { Branch, Executive, Service } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-function parse<T>(raw: string | undefined, fallback: T): T {
-  if (!raw) return fallback;
-  try {
-    return { ...fallback, ...JSON.parse(raw) };
-  } catch {
-    return fallback;
-  }
-}
-
 async function getData() {
+  // Header/footer/hero/branding resolve through the shared content resolver
+  // (database → local store → drop-in logo file → built-in defaults) instead of
+  // being read straight from the database. A database outage can therefore no
+  // longer swap an uploaded logo back to the built-in drawn mark.
+  const content = await loadSiteContent();
+
   try {
-    const [b, e, s, settings, sections, faqRows, socialRows] = await Promise.all([
+    const [b, e, s, sections, faqRows, socialRows] = await Promise.all([
       db.select().from(branches).orderBy(branches.region, branches.name),
       db.select().from(executives).orderBy(executives.sortOrder),
       db.select().from(services).orderBy(services.sortOrder),
-      db.select().from(siteSettings).catch(() => []),
       db.select().from(contentSections).orderBy(contentSections.sortOrder).catch(() => []),
       db.select().from(faqs).orderBy(faqs.sortOrder).catch(() => []),
       db.select().from(socialLinks).orderBy(socialLinks.sortOrder).catch(() => []),
     ]);
-    const map = Object.fromEntries((settings ?? []).map((x) => [x.key, x.value]));
     const locatorSection = (sections ?? []).find((x) => x.slug === "locator");
     return {
+      ...content,
       branches: (b.length > 0 ? b : BRANCHES.map((x, i) => ({ ...x, id: i + 1, isHq: x.isHq ?? false, notes: x.notes ?? null }))) as Branch[],
       executives: (e.length > 0 ? e : EXECUTIVES.map((x, i) => ({ ...x, id: i + 1 }))) as Executive[],
       services: (s.length > 0 ? s : SERVICES.map((x, i) => ({ ...x, id: i + 1 }))) as Service[],
-      theme: parse<ThemeSettings>(map.theme, DEFAULT_THEME),
-      branding: parse<BrandingSettings>(map.branding, DEFAULT_BRANDING),
-      header: parse<HeaderSettings>(map.header, DEFAULT_HEADER),
-      hero: parse<HeroSettings>(map.hero, DEFAULT_HERO),
-      footer: parse<FooterSettings>(map.footer, DEFAULT_FOOTER),
       locatorIntro: locatorSection
         ? { eyebrow: locatorSection.eyebrow ?? undefined, title: locatorSection.title, body: locatorSection.body ?? undefined }
         : null,
@@ -80,14 +56,10 @@ async function getData() {
     };
   } catch {
     return {
+      ...content,
       branches: BRANCHES.map((x, i) => ({ ...x, id: i + 1, isHq: x.isHq ?? false, notes: x.notes ?? null })) as Branch[],
       executives: EXECUTIVES.map((x, i) => ({ ...x, id: i + 1 })) as Executive[],
       services: SERVICES.map((x, i) => ({ ...x, id: i + 1 })) as Service[],
-      theme: DEFAULT_THEME,
-      branding: DEFAULT_BRANDING,
-      header: DEFAULT_HEADER,
-      hero: DEFAULT_HERO,
-      footer: DEFAULT_FOOTER,
       locatorIntro: null,
       sections: [] as CmsSection[],
       faqs: DEFAULT_FAQS.map((f, i) => ({ id: i + 1, ...f, sortOrder: i + 1, isVisible: true })) as Faq[],

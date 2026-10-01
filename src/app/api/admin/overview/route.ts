@@ -8,9 +8,9 @@ import { staticBackend, staticCounts, withStatic } from "@/lib/admin-static";
 export const dynamic = "force-dynamic";
 
 /** No database (or the query failed) — dashboard still renders, read-only. */
-function staticOverview() {
+async function staticOverview() {
   return withStatic({
-    counts: staticCounts(),
+    counts: await staticCounts(),
     recentBookings: [],
     backend: staticBackend(),
   });

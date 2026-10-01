@@ -31,3 +31,6 @@ next-env.d.ts
 /public/uploads/
 .vercel
 .env*
+
+# local content store (runtime CMS saves when no database is connected)
+/.data/

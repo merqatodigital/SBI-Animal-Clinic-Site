@@ -132,6 +132,8 @@ export default function AdminPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  /** Where the live content comes from: database | local-file | defaults. */
+  const [contentSource, setContentSource] = useState<string | null>(null);
 
   const [overview, setOverview] = useState<any>(null);
   const [branding, setBranding] = useState<BrandingSettings>(DEFAULT_BRANDING);
@@ -262,6 +264,7 @@ export default function AdminPage() {
       api<any>("/api/admin/bookings?limit=50").catch(() => ({ bookings: [] })),
     ]);
     if (ov) setOverview(ov);
+    if (set?.dataSource) setContentSource(set.dataSource);
     if (set?.settings) {
       const parse = (k: string, fb: any) => {
         try {
@@ -291,8 +294,22 @@ export default function AdminPage() {
   async function saveSetting(key: string, value: unknown) {
     setSaving(key);
     try {
-      await api("/api/admin/settings", { method: "PUT", body: JSON.stringify({ key, value }) });
-      flash(`${key} saved — live on the site now.`);
+      const res = await api<{ persisted?: string; note?: string }>("/api/admin/settings", {
+        method: "PUT",
+        body: JSON.stringify({ key, value }),
+      });
+      // Say exactly where the save landed — a silent redirect to the local
+      // store is what made an uploaded logo look like it had been ignored.
+      if (res.persisted === "local-file") {
+        setContentSource("local-file");
+        flash(
+          `${key} saved on this server and live on the site now — no database is storing it yet. ` +
+            "Connect DATABASE_URL (NEON_SETUP.md) to keep it in the cloud.",
+        );
+      } else {
+        setContentSource("database");
+        flash(`${key} saved — live on the site now.`);
+      }
       // Live-apply theme instantly.
       if (key === "theme") {
         const t = value as ThemeSettings;
@@ -478,12 +495,18 @@ export default function AdminPage() {
         </div>
       )}
 
-      {overview?.staticMode && (
+      {(overview?.staticMode || contentSource === "local-file") && (
         <div className="mx-auto max-w-[1400px] px-4 pt-4 sm:px-6" role="status">
-          <p className="border-l-4 border-alert bg-white px-4 py-3 text-[14px] font-semibold text-navy shadow-sm">
-            Read-only — no database connected yet (DATABASE_URL is unset). You are looking at the
-            same built-in content the live site serves; saving stays disabled until Postgres/Neon
-            is attached and the app is redeployed.
+          <p className="border-l-4 border-leaf bg-white px-4 py-3 text-[14px] font-semibold text-navy shadow-sm">
+            No database connected — that is fine. The logo, theme, header, hero, footer and media
+            save to this server&apos;s local content store and go live immediately
+            {overview?.backend?.localStore ? (
+              <>
+                {" "}
+                (<span className="font-mono text-[12px]">{overview.backend.localStore}</span>)
+              </>
+            ) : null}
+            . Branches, FAQs, sections and bookings still need Postgres/Neon — see NEON_SETUP.md.
           </p>
         </div>
       )}
@@ -618,6 +641,42 @@ export default function AdminPage() {
                 Upload the original image from your device. This one file is used in the site header and footer;
                 the hero badge is optional. The artwork is displayed with contain sizing (not cropped or stretched).
               </p>
+              {/* What the public site is actually serving, so a missing logo is
+                  never a mystery: uploaded file, or the built-in drawn mark. */}
+              <div className="mt-4 max-w-3xl border border-hair bg-paper p-3">
+                <p className="plate-label text-steel">Live on the site right now</p>
+                <div className="mt-2 flex flex-wrap items-center gap-4">
+                  <span className="flex h-20 w-20 shrink-0 items-center justify-center border border-hair bg-white p-1.5">
+                    <Logo src={branding.logoUrl} className="h-16 w-16" />
+                  </span>
+                  <span className="min-w-0 flex-1 text-[13px]">
+                    <span className="block font-bold text-navy">
+                      {branding.logoUrl ? "Uploaded logo" : "Built-in drawn SBI mark"}
+                    </span>
+                    <span className="block break-all text-steel">
+                      {branding.logoUrl ||
+                        "No logo file saved yet — the header, footer and services page keep using the drawn mark until you save one below."}
+                    </span>
+                    <span className="mt-1 block text-steel">
+                      Stored in:{" "}
+                      {contentSource === "database"
+                        ? "Postgres (site_settings) — shared by every visitor."
+                        : contentSource === "local-file"
+                          ? "this server's local content store — live immediately, and it survives restarts."
+                          : "the built-in defaults that ship with the code."}
+                    </span>
+                  </span>
+                  <a
+                    href="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-hair bg-white px-4 py-3 text-[12px] font-extrabold tracking-[0.1em] text-navy uppercase hover:border-cyan-deep hover:text-cyan-deep"
+                  >
+                    View site ↗
+                  </a>
+                </div>
+              </div>
+
               <div className="mt-4 max-w-3xl">
                 <MediaPicker
                   label="Logo image"
@@ -627,7 +686,7 @@ export default function AdminPage() {
                   multiple={false}
                   previewFit="contain"
                   inlineMaxBytes={3 * 1024 * 1024}
-                  hint="PNG, JPG, WebP, or SVG; uploaded as-is (never cropped or redrawn). 3 MB maximum. Display sizes: header 48–56 px, footer 96–128 px, optional hero 64–80 px."
+                  hint="PNG, JPG, WebP, or SVG; uploaded as-is (never cropped or redrawn). 'From device' embeds the file in the setting; uploading from the Library stores it as a file under /uploads instead — both save without a database. Then press “Save site logo”."
                 />
               </div>
               <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 text-[14px] font-semibold text-navy">
