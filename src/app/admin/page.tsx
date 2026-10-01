@@ -30,12 +30,14 @@ import {
 import { Logo } from "@/components/Logo";
 import { MediaPicker } from "@/components/MediaPicker";
 import {
+  DEFAULT_BRANDING,
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
   DEFAULT_HERO,
   DEFAULT_THEME,
   FONT_CHOICES,
   SOCIAL_PLATFORMS,
+  type BrandingSettings,
   type FooterSettings,
   type HeaderSettings,
   type HeroSettings,
@@ -132,6 +134,7 @@ export default function AdminPage() {
   const [notice, setNotice] = useState<string | null>(null);
 
   const [overview, setOverview] = useState<any>(null);
+  const [branding, setBranding] = useState<BrandingSettings>(DEFAULT_BRANDING);
   const [theme, setTheme] = useState<ThemeSettings>(DEFAULT_THEME);
   const [header, setHeader] = useState<HeaderSettings>(DEFAULT_HEADER);
   const [hero, setHero] = useState<HeroSettings>(DEFAULT_HERO);
@@ -267,6 +270,7 @@ export default function AdminPage() {
           return fb;
         }
       };
+      setBranding(parse("branding", DEFAULT_BRANDING));
       setTheme(parse("theme", DEFAULT_THEME));
       setHeader(parse("header", DEFAULT_HEADER));
       setHero(parse("hero", DEFAULT_HERO));
@@ -400,7 +404,7 @@ export default function AdminPage() {
       {/* Admin top bar — same plate language as the site */}
       <header className="sticky top-0 z-50 border-b border-hair bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] items-center gap-3 px-4 py-3 sm:px-6">
-          <Logo className="h-10 w-auto" />
+          <Logo src={branding.logoUrl} className="h-10 w-auto" />
           <span className="bg-navy px-2 py-1 text-[11px] font-extrabold tracking-[0.14em] text-white uppercase">
             Admin
           </span>
@@ -597,6 +601,42 @@ export default function AdminPage() {
         {/* ── HEADER & HERO ────────────────────────────────────────── */}
         {tab === "header" && (
           <div className="grid gap-6 lg:grid-cols-2">
+            <div className="border border-navy/20 bg-white p-5 lg:col-span-2">
+              <p className="plate-label text-cyan-deep">Branding · site logo</p>
+              <h2 className="mt-1 text-[22px] text-navy">Upload the official logo</h2>
+              <p className="mt-1 max-w-3xl text-[14px] leading-relaxed text-steel">
+                Upload the original image from your device. This one file is used in the site header and footer;
+                the hero badge is optional. The artwork is displayed with contain sizing (not cropped or stretched).
+              </p>
+              <div className="mt-4 max-w-3xl">
+                <MediaPicker
+                  label="Logo image"
+                  value={branding.logoUrl}
+                  onChange={(logoUrl) => setBranding({ ...branding, logoUrl })}
+                  accept="image/*"
+                  multiple={false}
+                  previewFit="contain"
+                  hint="Square PNG, JPG, WebP, or SVG recommended. 25 MB maximum. Display sizes: header 48–56 px, footer 96–128 px, optional hero 64–80 px."
+                />
+              </div>
+              <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 text-[14px] font-semibold text-navy">
+                <input
+                  type="checkbox"
+                  checked={branding.showHeroLogo}
+                  onChange={(e) => setBranding({ ...branding, showHeroLogo: e.target.checked })}
+                  className="h-4 w-4 accent-[#0A3D7A]"
+                />
+                Show this logo on the hero (optional)
+              </label>
+              <button
+                type="button"
+                disabled={saving === "branding"}
+                onClick={() => saveSetting("branding", branding)}
+                className="mt-4 w-full max-w-3xl bg-navy px-5 py-3.5 text-[13px] font-extrabold tracking-[0.1em] text-white uppercase hover:bg-cyan hover:text-navy-deep disabled:opacity-50"
+              >
+                {saving === "branding" ? "Saving…" : "Save site logo"}
+              </button>
+            </div>
             <div className="border border-hair bg-white p-5">
               <p className="plate-label text-cyan-deep">Header · emergency ribbon</p>
               <h2 className="mt-1 text-[22px] text-navy">Top banner &amp; nav strip</h2>

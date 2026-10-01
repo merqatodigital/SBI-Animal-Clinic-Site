@@ -17,6 +17,12 @@ export interface ThemeSettings {
   baseFontSize: number;
 }
 
+/** One uploaded brand mark shared by the public header/footer and optional hero badge. */
+export interface BrandingSettings {
+  logoUrl: string;
+  showHeroLogo: boolean;
+}
+
 export interface HeaderSettings {
   bannerText: string;
   phone: string;
@@ -107,6 +113,12 @@ export const DEFAULT_THEME: ThemeSettings = {
   fontDisplay: "Plus Jakarta Sans",
   fontBody: "Inter",
   baseFontSize: 16,
+};
+
+export const DEFAULT_BRANDING: BrandingSettings = {
+  // Upload the clinic artwork in Admin to replace the built-in SVG mark.
+  logoUrl: "",
+  showHeroLogo: false,
 };
 
 export const DEFAULT_HEADER: HeaderSettings = {

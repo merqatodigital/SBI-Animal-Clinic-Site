@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { siteSettings } from "@/db/schema";
 import { isAdminRequest, unauthorized } from "@/lib/admin-auth";
-import { DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_HERO, DEFAULT_THEME } from "@/lib/cms";
+import { DEFAULT_BRANDING, DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_HERO, DEFAULT_THEME } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
 const FALLBACKS: Record<string, unknown> = {
+  branding: DEFAULT_BRANDING,
   theme: DEFAULT_THEME,
   header: DEFAULT_HEADER,
   hero: DEFAULT_HERO,

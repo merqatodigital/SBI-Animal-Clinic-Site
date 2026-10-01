@@ -15,6 +15,10 @@ function authHeaders(): HeadersInit {
   return { "x-sbi-passkey": storedKey() };
 }
 
+function mediaSrc(url: string) {
+  return /^https?:\/\//i.test(url) || url.startsWith("/") ? url : `/${url}`;
+}
+
 /**
  * Reusable media field for the admin: pick from the library, upload straight
  * from the device (images + videos), or paste a URL. Shows a live preview.
@@ -25,12 +29,16 @@ export function MediaPicker({
   onChange,
   accept = "image/*,video/*",
   hint,
+  previewFit = "cover",
+  multiple = true,
 }: {
   label: string;
   value: string;
   onChange: (url: string) => void;
   accept?: string;
   hint?: string;
+  previewFit?: "cover" | "contain";
+  multiple?: boolean;
 }) {
   const [library, setLibrary] = useState<MediaAsset[]>([]);
   const [open, setOpen] = useState(false);
@@ -95,7 +103,7 @@ export function MediaPicker({
             <input
               type="file"
               accept={accept}
-              multiple
+              multiple={multiple}
               className="sr-only"
               onChange={(e) => e.target.files && upload(e.target.files)}
             />
@@ -124,13 +132,13 @@ export function MediaPicker({
       {value && (
         <div className="mt-2 border border-hair bg-paper p-2">
           {isVideo || value.endsWith(".mp4") || value.endsWith(".webm") ? (
-            <video src={value.startsWith("http") ? value : `/${value}`} controls className="max-h-44 w-full bg-black" />
+            <video src={mediaSrc(value)} controls className="max-h-44 w-full bg-black" />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={value.startsWith("http") ? value : `/${value}`}
+              src={mediaSrc(value)}
               alt={`${label} preview`}
-              className="max-h-44 w-full object-cover"
+              className={previewFit === "contain" ? "h-44 w-full bg-white object-contain" : "max-h-44 w-full object-cover"}
             />
           )}
         </div>
@@ -157,7 +165,7 @@ export function MediaPicker({
               <input
                 type="file"
                 accept={accept}
-                multiple
+                multiple={multiple}
                 className="sr-only"
                 onChange={(e) => e.target.files && upload(e.target.files)}
               />
@@ -179,10 +187,10 @@ export function MediaPicker({
                     title={`${m.fileName} — click to use`}
                   >
                     {m.kind === "video" ? (
-                      <video src={`/${m.url}`} className="h-20 w-full bg-black object-cover" muted playsInline />
+                      <video src={mediaSrc(m.url)} className="h-20 w-full bg-black object-cover" muted playsInline />
                     ) : (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={`/${m.url}`} alt={m.fileName} className="h-20 w-full object-cover" loading="lazy" />
+                      <img src={mediaSrc(m.url)} alt={m.fileName} className="h-20 w-full object-cover" loading="lazy" />
                     )}
                     <span className="block truncate px-1 py-0.5 text-left text-[10px] text-steel">
                       {m.kind} · {(m.sizeBytes / 1024).toFixed(0)} KB

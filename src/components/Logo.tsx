@@ -1,5 +1,7 @@
 interface LogoProps {
   className?: string;
+  /** Use the exact uploaded brand asset instead of the built-in SVG mark. */
+  src?: string | null;
   /** Draw the "SBI Medical" wordmark block beside the seal. */
   showWordmark?: boolean;
   tone?: "light" | "dark";
@@ -9,7 +11,19 @@ interface LogoProps {
  * SBI Medical mark, drawn as vector paths: a navy roundel with a stethoscope
  * whose tubing resolves into an ECG trace, over the wordmark and SINCE 2010 rule.
  */
-export function Logo({ className = "", showWordmark = true, tone = "dark" }: LogoProps) {
+export function Logo({ className = "", src, showWordmark = true, tone = "dark" }: LogoProps) {
+  if (src?.trim()) {
+    const imageSrc = /^https?:\/\//i.test(src) || src.startsWith("/") ? src : `/${src}`;
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={imageSrc}
+        className={`object-contain ${className}`}
+        alt="SBI Medical Animal Bite Center and Vaccination Clinic, since 2010"
+      />
+    );
+  }
+
   const navy = tone === "dark" ? "#0A3D7A" : "#FFFFFF";
   const accent = "#E31E24";
 

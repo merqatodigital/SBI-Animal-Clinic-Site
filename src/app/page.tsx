@@ -16,12 +16,14 @@ import { db } from "@/db";
 import { branches, contentSections, executives, faqs, services, siteSettings, socialLinks } from "@/db/schema";
 import { BRANCHES, EXECUTIVES, SERVICES } from "@/lib/catalog";
 import {
+  DEFAULT_BRANDING,
   DEFAULT_FAQS,
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
   DEFAULT_HERO,
   DEFAULT_SOCIALS,
   DEFAULT_THEME,
+  type BrandingSettings,
   type CmsSection,
   type Faq,
   type FooterSettings,
@@ -61,6 +63,7 @@ async function getData() {
       executives: (e.length > 0 ? e : EXECUTIVES.map((x, i) => ({ ...x, id: i + 1 }))) as Executive[],
       services: (s.length > 0 ? s : SERVICES.map((x, i) => ({ ...x, id: i + 1 }))) as Service[],
       theme: parse<ThemeSettings>(map.theme, DEFAULT_THEME),
+      branding: parse<BrandingSettings>(map.branding, DEFAULT_BRANDING),
       header: parse<HeaderSettings>(map.header, DEFAULT_HEADER),
       hero: parse<HeroSettings>(map.hero, DEFAULT_HERO),
       footer: parse<FooterSettings>(map.footer, DEFAULT_FOOTER),
@@ -81,6 +84,7 @@ async function getData() {
       executives: EXECUTIVES.map((x, i) => ({ ...x, id: i + 1 })) as Executive[],
       services: SERVICES.map((x, i) => ({ ...x, id: i + 1 })) as Service[],
       theme: DEFAULT_THEME,
+      branding: DEFAULT_BRANDING,
       header: DEFAULT_HEADER,
       hero: DEFAULT_HERO,
       footer: DEFAULT_FOOTER,
@@ -100,9 +104,9 @@ export default async function HomePage() {
       <ThemeInjector theme={data.theme} />
       <AdminShortcut />
       <AdminOverlay />
-      <SiteHeader header={data.header} />
+      <SiteHeader header={data.header} branding={data.branding} />
       <main>
-        <Hero hero={data.hero} />
+        <Hero hero={data.hero} branding={data.branding} />
         <Locator initial={data.branches} intro={data.locatorIntro} />
         <TriageWizard branches={data.branches} />
         <ServicesTeaser services={data.services} />
@@ -112,7 +116,7 @@ export default async function HomePage() {
         <About executives={data.executives} />
         <FaqSection faqs={data.faqs} />
       </main>
-      <Footer footer={data.footer} socials={data.socials} />
+      <Footer footer={data.footer} socials={data.socials} branding={data.branding} />
     </>
   );
 }

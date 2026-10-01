@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck, BadgeCheck, Menu, X, Phone, MapPin } from "lucide-react";
 import { Logo } from "./Logo";
 import { AdminGate, useTripleClick } from "./AdminGate";
-import { DEFAULT_HEADER, type HeaderSettings } from "@/lib/cms";
+import { DEFAULT_BRANDING, DEFAULT_HEADER, type BrandingSettings, type HeaderSettings } from "@/lib/cms";
 
 const NAV = [
   { href: "#locator", label: "Find a Branch" },
@@ -16,8 +16,15 @@ const NAV = [
   { href: "#about", label: "About Us" },
 ];
 
-export function SiteHeader({ header }: { header?: HeaderSettings | null }) {
+export function SiteHeader({
+  header,
+  branding,
+}: {
+  header?: HeaderSettings | null;
+  branding?: BrandingSettings | null;
+}) {
   const h = { ...DEFAULT_HEADER, ...(header ?? {}) };
+  const brand = { ...DEFAULT_BRANDING, ...(branding ?? {}) };
   const [open, setOpen] = useState(false);
   const [now, setNow] = useState<string>("");
   const [gateOpen, setGateOpen] = useState(false);
@@ -83,7 +90,7 @@ export function SiteHeader({ header }: { header?: HeaderSettings | null }) {
             title="Click logo 3 times quickly for admin access"
             onClick={(e) => triple(e)}
           >
-            <Logo className="pointer-events-none h-12 w-auto sm:h-14" />
+            <Logo src={brand.logoUrl} className="pointer-events-none h-12 w-auto sm:h-14" />
           </a>
           <AdminGate forceOpen={gateOpen} onClose={() => setGateOpen(false)} />
 
