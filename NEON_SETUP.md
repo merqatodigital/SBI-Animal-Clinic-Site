@@ -40,6 +40,20 @@ src/app/api/admin/*    overview | settings | sections | faqs | socials | media
 4. **Seed**:
    `npx tsx scripts/seed.ts && npx tsx scripts/seed-cms.ts`
 
+## Saving content before Neon is connected
+
+You do **not** need Neon to change the logo, palette, header, hero or footer, or to upload media:
+
+- Those saves are written to a local content store at `.data/site-content.json`
+  (`SBI_DATA_DIR` overrides the folder) and the uploaded files to `public/uploads/`.
+  They go live immediately and survive restarts. The admin panel reports whether a save landed in
+  Postgres or in the local store.
+- As soon as `DATABASE_URL` is reachable again, the next admin page load flushes every locally saved
+  key into `site_settings` and clears it from the store — so the two sources cannot drift apart.
+- Branches, FAQs, CMS sections, social links and bookings still need Postgres.
+- Vercel's filesystem is read-only, so on Vercel use either `DATABASE_URL` or commit the logo as
+  `public/images/sbi-logo.png` (see "The site logo" in README.md).
+
 ## Notes
 
 - `src/db/index.ts` detects `neon.tech` hosts and enables `ssl: { rejectUnauthorized: false }`

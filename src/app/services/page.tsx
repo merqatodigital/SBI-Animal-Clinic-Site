@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { SkuCatalogue } from "@/components/SkuCatalogue";
 import { ThemeInjector } from "@/components/ThemeInjector";
+import { loadSiteContent, loadSocials } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
@@ -27,15 +28,21 @@ async function getServices(): Promise<Service[]> {
 }
 
 export default async function ServicesPage() {
-  const list = await getServices();
+  const [list, content, socials] = await Promise.all([
+    getServices(),
+    loadSiteContent(),
+    loadSocials(),
+  ]);
   return (
     <>
-      <ThemeInjector />
-      <SiteHeader />
+      <ThemeInjector theme={content.theme} />
+      {/* Header/footer previously received no branding at all, so this page
+          always rendered the built-in drawn mark instead of the real logo. */}
+      <SiteHeader header={content.header} branding={content.branding} />
       <main>
         <SkuCatalogue services={list} />
       </main>
-      <Footer />
+      <Footer footer={content.footer} socials={socials} branding={content.branding} />
     </>
   );
 }

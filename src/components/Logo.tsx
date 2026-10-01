@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 interface LogoProps {
   className?: string;
   /** Use the exact uploaded brand asset instead of the built-in SVG mark. */
@@ -7,19 +11,34 @@ interface LogoProps {
   tone?: "light" | "dark";
 }
 
+/** Turn a stored URL (uploads/…, images/…, data:, https:…) into an <img> src. */
+export function logoSrc(src: string) {
+  return /^(https?:|data:image\/|blob:)/i.test(src) || src.startsWith("/") ? src : `/${src}`;
+}
+
 /**
  * SBI Medical mark, drawn as vector paths: a navy roundel with a stethoscope
  * whose tubing resolves into an ECG trace, over the wordmark and SINCE 2010 rule.
+ *
+ * When an uploaded logo is supplied it is rendered exactly as uploaded (contain
+ * sizing, never cropped or redrawn). If that image cannot be loaded — a stale
+ * URL, a deleted file — the drawn mark takes over instead of leaving a blank
+ * box in the header.
  */
 export function Logo({ className = "", src, showWordmark = true, tone = "dark" }: LogoProps) {
-  if (src?.trim()) {
-    const imageSrc = /^(https?:|data:image\/|blob:)/i.test(src) || src.startsWith("/") ? src : `/${src}`;
+  const uploaded = src?.trim() ?? "";
+  // Only the URL that actually failed is remembered, so a newly saved logo
+  // always gets a fresh attempt without needing an effect.
+  const [brokenUrl, setBrokenUrl] = useState<string | null>(null);
+
+  if (uploaded && brokenUrl !== uploaded) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={imageSrc}
+        src={logoSrc(uploaded)}
         className={`object-contain ${className}`}
         alt="SBI Medical Animal Bite Center and Vaccination Clinic, since 2010"
+        onError={() => setBrokenUrl(uploaded)}
       />
     );
   }
