@@ -60,13 +60,16 @@ export function About({ executives }: { executives: Executive[] }) {
           </div>
 
           <div>
-            <div className="relative overflow-hidden rounded-xl border border-hair shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
+            <div className="relative min-h-64 overflow-hidden rounded-xl border border-hair bg-[radial-gradient(120%_90%_at_20%_15%,#d7f2fd_0%,#f8f9fa_70%)] shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)] sm:min-h-80">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="images/clinic-interior.jpg"
                 alt="Empty waiting area of an SBI clinic with pale blue chairs and a navy accent wall"
                 className="h-64 w-full object-cover sm:h-80"
                 loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
               />
               <div className="absolute inset-x-3 bottom-3 flex flex-wrap gap-3 rounded-xl bg-white/95 px-4 py-3 backdrop-blur-md">
                 <SealBadge label="DOH Certified" sub="PEP-compliant" />
