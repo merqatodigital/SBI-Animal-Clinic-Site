@@ -10,11 +10,11 @@ export function FaqSection({ faqs }: { faqs: Faq[] }) {
   if (faqs.length === 0) return null;
 
   return (
-    <section id="faq" className="scroll-mt-32 border-t border-hair bg-paper">
+    <section id="faq" className="scroll-mt-32 bg-paper">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <div>
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+            <p className="eyebrow text-cyan-deep">
               <MessageCircleQuestion className="h-4 w-4" aria-hidden="true" />
               06 / FAQ
             </p>

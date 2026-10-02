@@ -205,7 +205,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                   key="done"
                   {...fadeSlide}
                   data-wizard
-                  className="rounded-[1.5rem] border border-white/20 bg-white p-6 shadow-[0_40px_80px_-56px_rgba(0,0,0,1)] sm:p-9"
+                  className="rounded-xl border border-white/20 bg-white p-6 shadow-[0_40px_80px_-56px_rgba(0,0,0,1)] sm:p-9"
                   role="status"
                 >
                   <p className="plate-label text-cyan-deep">Booking confirmed</p>
@@ -267,7 +267,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                   key={step}
                   {...fadeSlide}
                   data-wizard
-                  className="rounded-[1.5rem] border border-white/20 bg-white/8 p-5 shadow-[0_36px_80px_-60px_rgba(0,0,0,1)] backdrop-blur-md sm:p-8"
+                  className="rounded-xl border border-white/20 bg-white/8 p-5 shadow-[0_36px_80px_-60px_rgba(0,0,0,1)] backdrop-blur-md sm:p-8"
                 >
                   {/* mobile step indicator */}
                   <div className="mb-5 flex items-center gap-2 lg:hidden">
@@ -307,7 +307,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                               type="button"
                               aria-pressed={on}
                               onClick={() => setCategory(key)}
-                              className={`group flex flex-col items-start rounded-2xl border p-5 text-left transition-all duration-150 ${
+                              className={`group flex flex-col items-start rounded-xl border p-5 text-left transition-all duration-150 ${
                                 on
                                   ? `${key === "III" ? "bg-alert" : key === "II" ? "bg-cyan" : "bg-white"} -translate-y-1 shadow-[0_24px_48px_-28px_rgba(0,0,0,0.9)]`
                                   : `bg-white/8 hover:-translate-y-1 hover:bg-white/12 ${tone}`
@@ -355,7 +355,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                               type="button"
                               aria-pressed={on}
                               onClick={() => setAnimal(a.key)}
-                              className={`rounded-2xl border p-5 text-left transition-all duration-150 ${
+                              className={`rounded-xl border p-5 text-left transition-all duration-150 ${
                                 on
                                   ? "-translate-y-1 border-cyan bg-cyan text-navy-deep shadow-[0_24px_48px_-28px_rgba(0,0,0,0.9)]"
                                   : "border-white/25 bg-white/8 text-white hover:-translate-y-1 hover:border-cyan hover:bg-white/12"
@@ -393,7 +393,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                               type="button"
                               aria-pressed={philhealth === true}
                               onClick={() => setPhilhealth(true)}
-                              className={`rounded-2xl border p-5 text-left transition-all duration-150 ${
+                              className={`rounded-xl border p-5 text-left transition-all duration-150 ${
                                 philhealth === true
                                   ? "-translate-y-1 border-cyan bg-cyan text-navy-deep shadow-[0_24px_48px_-28px_rgba(0,0,0,0.9)]"
                                   : "border-white/25 bg-white/8 text-white hover:-translate-y-1 hover:border-cyan hover:bg-white/12"
@@ -410,7 +410,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                               type="button"
                               aria-pressed={philhealth === false}
                               onClick={() => setPhilhealth(false)}
-                              className={`rounded-2xl border p-5 text-left transition-all duration-150 ${
+                              className={`rounded-xl border p-5 text-left transition-all duration-150 ${
                                 philhealth === false
                                   ? "-translate-y-1 border-white bg-white text-navy shadow-[0_24px_48px_-28px_rgba(0,0,0,0.9)]"
                                   : "border-white/25 bg-white/8 text-white hover:-translate-y-1 hover:border-cyan hover:bg-white/12"
@@ -441,7 +441,7 @@ export function TriageWizard({ branches }: { branches: Branch[] }) {
                             animate={{ opacity: 1, y: 0, rotate: -0.6 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-                            className="mt-4 rounded-2xl border border-white bg-white p-5 shadow-[0_30px_60px_-34px_rgba(0,0,0,0.9)]"
+                            className="mt-4 rounded-xl border border-white bg-white p-5 shadow-[0_30px_60px_-34px_rgba(0,0,0,0.9)]"
                             role="alert"
                           >
                             <p className="plate-label text-alert">

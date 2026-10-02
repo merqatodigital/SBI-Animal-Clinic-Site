@@ -150,7 +150,7 @@ function FallbackGate({ onClose }: { onClose: () => void }) {
       <form
         onSubmit={submit}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm overflow-hidden rounded-[1.5rem] border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
+        className="w-full max-w-sm overflow-hidden rounded-xl border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
       >
         <div className="border-b-2 border-navy p-5">
           <p className="plate-label flex items-center gap-2 text-cyan-deep">

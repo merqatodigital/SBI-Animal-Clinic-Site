@@ -30,11 +30,11 @@ function ShieldPlusIcon({ className }: { className?: string }) {
 
 export function PhilHealth() {
   return (
-    <section id="philhealth" className="scroll-mt-32 border-t border-hair bg-paper">
+    <section id="philhealth" className="scroll-mt-32 bg-paper">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
           <div>
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+            <p className="eyebrow text-cyan-deep">
               <Wallet className="h-4 w-4" aria-hidden="true" />
               04 / Coverage
             </p>
@@ -70,7 +70,7 @@ export function PhilHealth() {
               ))}
             </div>
 
-            <div className="mt-6 flex gap-3 rounded-2xl border-l-4 border-alert bg-white p-5 shadow-[0_18px_40px_-32px_rgba(6,37,74,0.9)]">
+            <div className="mt-6 flex gap-3 rounded-xl border-l-4 border-alert bg-white p-5 shadow-[0_18px_40px_-32px_rgba(6,37,74,0.9)]">
               <FileCheck2 className="mt-0.5 h-5 w-5 shrink-0 text-alert" aria-hidden="true" />
               <p className="text-[15px] text-ink">
                 <strong className="text-alert">Eligibility note:</strong> the member must have a
@@ -86,7 +86,7 @@ export function PhilHealth() {
             </a>
           </div>
 
-          <aside className="rounded-[1.75rem] bg-navy p-6 text-white shadow-[0_40px_80px_-56px_rgba(6,37,74,1)] sm:p-8">
+          <aside className="rounded-xl bg-navy p-6 text-white shadow-[0_40px_80px_-56px_rgba(6,37,74,1)] sm:p-8">
             <p className="plate-label flex items-center gap-2 text-cyan">
               <BadgeCheck className="h-4 w-4" aria-hidden="true" />
               Accreditation
@@ -94,10 +94,10 @@ export function PhilHealth() {
             <h3 className="mt-2 text-[clamp(1.5rem,3vw,2.2rem)]">Trust, in writing.</h3>
 
             <div className="mt-6 space-y-4 border-t border-white/15 pt-6">
-              <div className="rounded-2xl bg-white p-4">
+              <div className="rounded-xl bg-white p-4">
                 <SealBadge label="DOH Certified" sub="Department of Health · PEP-compliant centers" />
               </div>
-              <div className="rounded-2xl bg-white p-4">
+              <div className="rounded-xl bg-white p-4">
                 <SealBadge
                   label="PhilHealth Accredited"
                   sub="Animal Bite Package Provider (ABPP) · CY 2026"

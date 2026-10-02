@@ -97,7 +97,7 @@ export function SkuCatalogue({
         {/* Head */}
         <div className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-navy pb-6">
           <div className="max-w-2xl">
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+            <p className="eyebrow text-cyan-deep">
               <Boxes className="h-4 w-4" aria-hidden="true" />
               Cold-chain inventory · SKU catalogue
             </p>
@@ -121,7 +121,7 @@ export function SkuCatalogue({
             ].map(([big, small]) => (
               <div
                 key={small}
-                className="min-w-[112px] rounded-2xl border border-hair bg-white px-4 py-3"
+                className="min-w-[112px] rounded-xl border border-hair bg-white px-4 py-3"
               >
                 <dt className="tabular text-[26px] leading-none font-extrabold text-navy">
                   {big}
@@ -198,7 +198,7 @@ export function SkuCatalogue({
 
         {/* Cards */}
         {visible.length === 0 ? (
-          <div className="mt-8 rounded-[1.5rem] border border-dashed border-steel/40 bg-white p-12 text-center">
+          <div className="mt-8 rounded-xl border border-dashed border-steel/40 bg-white p-12 text-center">
             <SearchX className="mx-auto h-8 w-8 text-steel" aria-hidden="true" />
             <p className="mt-3 text-[18px] font-bold text-navy">No SKU matches that search.</p>
             <p className="mt-1 text-[15px] text-steel">

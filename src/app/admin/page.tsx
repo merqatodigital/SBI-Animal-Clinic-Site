@@ -390,7 +390,7 @@ export default function AdminPage() {
       <div className="flex min-h-screen items-center justify-center bg-navy-deep p-4">
         <form
           onSubmit={login}
-          className="w-full max-w-sm overflow-hidden rounded-[1.5rem] border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
+          className="w-full max-w-sm overflow-hidden rounded-xl border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
         >
           <div className="flex justify-center border-b border-hair pt-6">
             <Logo className="h-16 w-auto" />
@@ -796,7 +796,7 @@ export default function AdminPage() {
             </div>
 
             {editingSection && (
-              <div className="mt-5 rounded-[1.5rem] border border-navy/20 bg-white p-5 shadow-[0_36px_70px_-50px_rgba(6,37,74,0.95)]">
+              <div className="mt-5 rounded-xl border border-navy/20 bg-white p-5 shadow-[0_36px_70px_-50px_rgba(6,37,74,0.95)]">
                 <h2 className="text-[20px] text-navy">{editingSection.id ? "Edit section" : "New section"}</h2>
                 <div className="mt-4 grid gap-4 lg:grid-cols-2">
                   <Field label="Slug (url-safe)"><input value={editingSection.slug} onChange={(e) => setEditingSection({ ...editingSection, slug: e.target.value })} className={inputCls} /></Field>
@@ -1104,7 +1104,7 @@ export default function AdminPage() {
                 </div>
               </div>
             </div>
-            <div className="rounded-[1.5rem] border border-navy/20 bg-white p-5 shadow-[0_36px_70px_-50px_rgba(6,37,74,0.95)]">
+            <div className="rounded-xl border border-navy/20 bg-white p-5 shadow-[0_36px_70px_-50px_rgba(6,37,74,0.95)]">
               <p className="plate-label text-cyan-deep">Professional developer credit</p>
               <h2 className="mt-1 text-[20px] text-navy">“Website by” plate</h2>
               <div className="mt-3 space-y-4">

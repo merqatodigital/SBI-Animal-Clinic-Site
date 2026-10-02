@@ -59,7 +59,7 @@ export function Hero({
     <section id="top" className="relative bg-paper">
       <div className="mx-auto max-w-[1400px] px-4 pt-6 sm:px-6 sm:pt-8">
         {/* ── ONE photo-led panel, identical composition at every breakpoint ── */}
-        <div className="relative overflow-hidden rounded-[1.75rem] shadow-[0_50px_90px_-58px_rgba(6,37,74,1)] sm:rounded-[2rem]">
+        <div className="relative overflow-hidden rounded-xl shadow-[0_50px_90px_-58px_rgba(6,37,74,1)] sm:rounded-xl">
           <div className="absolute inset-0">
             {vid ? (
               <video
@@ -110,7 +110,7 @@ export function Hero({
                 {h.eyebrow}
               </p>
 
-              <h1 className="mt-5 text-[clamp(2.3rem,6.4vw,4.6rem)] text-white drop-shadow-[0_2px_18px_rgba(4,24,47,0.45)]">
+              <h1 className="mt-5 max-w-[18ch] text-[clamp(2.1rem,4.8vw,3.5rem)] text-white drop-shadow-[0_2px_18px_rgba(4,24,47,0.45)]">
                 {h.line1}
                 <br />
                 <span className="text-[#FF6B70]">{h.line2}</span>
@@ -154,7 +154,7 @@ export function Hero({
             </div>
 
             {/* Floating protocol card (desktop only) */}
-            <div className="absolute right-10 bottom-10 hidden w-64 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md lg:block">
+            <div className="absolute right-10 bottom-10 hidden w-64 rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-md lg:block">
               <p className="plate-label flex items-center gap-2 text-cyan">
                 <Syringe className="h-4 w-4" aria-hidden="true" />
                 PEP protocol
@@ -196,7 +196,7 @@ export function Hero({
       {/* ── First-aid protocol ─────────────────────────────────────── */}
       <div className="mt-14 border-t border-hair bg-white">
         <div className="mx-auto grid max-w-[1400px] items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:py-20">
-          <div className="relative overflow-hidden rounded-[1.75rem] shadow-[0_30px_60px_-40px_rgba(6,37,74,0.8)]">
+          <div className="relative overflow-hidden rounded-xl shadow-[0_30px_60px_-40px_rgba(6,37,74,0.8)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="images/first-aid-wash.jpg"
@@ -210,7 +210,7 @@ export function Hero({
           </div>
 
           <div>
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-paper px-3.5 py-2 text-alert">
+            <p className="eyebrow text-alert">
               <Clock3 className="h-4 w-4" aria-hidden="true" />
               Immediate first aid · the first 15 minutes
             </p>

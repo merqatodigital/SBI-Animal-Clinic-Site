@@ -179,7 +179,7 @@ export function AdminGate({
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 12, opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
-            className="w-full max-w-sm overflow-hidden rounded-[1.5rem] border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
+            className="w-full max-w-sm overflow-hidden rounded-xl border border-navy/15 bg-white shadow-[0_40px_90px_-44px_rgba(0,174,239,0.85)]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="border-b-2 border-navy p-5">

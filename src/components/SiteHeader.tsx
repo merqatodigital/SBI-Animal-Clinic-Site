@@ -99,7 +99,7 @@ export function SiteHeader({
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-4 py-2.5 text-[15px] font-semibold text-navy transition-all duration-150 hover:bg-cyan-soft hover:text-navy-deep"
+                className="shrink-0 whitespace-nowrap rounded-full px-4 py-2.5 text-[15px] font-semibold text-navy transition-all duration-150 hover:bg-cyan-soft hover:text-navy-deep"
               >
                 {item.label}
               </a>
@@ -107,14 +107,18 @@ export function SiteHeader({
           </nav>
 
           <div className="ml-auto hidden shrink-0 items-center gap-2.5 lg:ml-4 lg:flex">
-            <span className="chip !text-steel">
-              <ShieldCheck className="h-3.5 w-3.5 text-navy" aria-hidden="true" />
-              DOH Certified
-            </span>
-            <span className="chip !text-leaf">
-              <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
-              PhilHealth ABPP
-            </span>
+            {/* Trust badges only earn their space on very wide screens; below
+                that they crowd the nav and clip the CTA. */}
+            <div className="hidden items-center gap-2.5 2xl:flex">
+              <span className="chip !text-steel">
+                <ShieldCheck className="h-3.5 w-3.5 text-navy" aria-hidden="true" />
+                DOH Certified
+              </span>
+              <span className="chip !text-leaf">
+                <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                PhilHealth ABPP
+              </span>
+            </div>
             <a href="#triage" className="btn btn-primary">
               Book Appointment
             </a>
@@ -155,7 +159,7 @@ export function SiteHeader({
                         window.dispatchEvent(new CustomEvent("sbi:open-services"));
                       }
                     }}
-                    className="rounded-2xl px-4 py-3.5 text-[17px] font-bold text-navy transition-colors hover:bg-cyan-soft"
+                    className="rounded-xl px-4 py-3.5 text-[17px] font-bold text-navy transition-colors hover:bg-cyan-soft"
                   >
                     {item.label}
                   </a>
