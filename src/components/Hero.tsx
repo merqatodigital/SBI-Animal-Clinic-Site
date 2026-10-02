@@ -11,6 +11,7 @@ import {
   Syringe,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { SmartImage } from "@/components/SmartImage";
 import { DEFAULT_BRANDING, DEFAULT_HERO, type BrandingSettings, type HeroSettings } from "@/lib/cms";
 
 const PROTOCOL = [
@@ -75,17 +76,11 @@ export function Hero({
               />
             ) : (
               img && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <SmartImage
                   src={img}
                   alt="SBI nurse preparing a vaccine beside a dog and its owner in the clinic waiting area"
                   className="h-full w-full object-cover object-center md:object-[62%_center]"
                   fetchPriority="high"
-                  onError={(e) => {
-                    // No photo shipped yet — fall back to the gradient scrim
-                    // rather than printing raw alt text across the hero.
-                    e.currentTarget.style.display = "none";
-                  }}
                 />
               )
             )}
@@ -202,15 +197,11 @@ export function Hero({
       <div className="mt-14 border-t border-hair bg-white">
         <div className="mx-auto grid max-w-[1400px] items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:py-20">
           <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[radial-gradient(120%_90%_at_20%_15%,#d7f2fd_0%,#f8f9fa_70%)] shadow-[0_30px_60px_-40px_rgba(6,37,74,0.8)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <SmartImage
               src="images/first-aid-wash.jpg"
               alt="A bitten forearm being washed thoroughly with soap under running water"
               className="h-full w-full object-cover"
               loading="lazy"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
             />
             <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-alert px-3 py-1.5 text-[12px] font-extrabold tracking-[0.14em] text-white uppercase">
               Do this first
