@@ -157,8 +157,7 @@ export function Footer({
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
             <div className="min-w-0 max-w-md">
               <p className="text-[14px] leading-[1.65] text-white/60">
-                © {new Date().getFullYear()} SBI Medical &amp; Animal Bite Center &amp; Vaccination
-                Clinic. All rights reserved.
+                {`© ${new Date().getFullYear()} SBI Medical & Animal Bite Center & Vaccination Clinic. All rights reserved.`}
               </p>
               <p className="mt-1 text-[14px] leading-[1.65] text-white/45">{f.address}</p>
             </div>
