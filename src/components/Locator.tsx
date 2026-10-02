@@ -140,18 +140,24 @@ export function Locator({
   const nearest = withDistance[0];
 
   return (
-    <section id="locator" className="scroll-mt-32 border-t border-hair bg-paper">
+    <section id="locator" className="scroll-mt-32 bg-white">
       <div className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6 lg:pt-24">
         <div className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-navy pb-5">
           <div>
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+            <p className="eyebrow text-cyan-deep">
               <MapPin className="h-4 w-4" aria-hidden="true" />
               {eyebrow}
             </p>
             <h2 className="mt-5 text-[clamp(2rem,5vw,3.4rem)] text-navy">
               {title}
-              <br />
-              <span className="text-ink">One archipelago-wide standard of care.</span>
+              {/* The CMS title already carries the tagline; only append it when
+                  an editor has replaced the title with something shorter. */}
+              {!/archipelago/i.test(title) && (
+                <>
+                  <br />
+                  <span className="text-ink">One archipelago-wide standard of care.</span>
+                </>
+              )}
             </h2>
           </div>
           <p className="max-w-md text-[15px] text-steel">{body}</p>
@@ -235,7 +241,7 @@ export function Locator({
         <div className="lg:sticky lg:top-40 lg:h-[calc(100vh-11rem)]">
           <div
             id="branch-map"
-            className="h-[440px] scroll-mt-40 overflow-hidden rounded-[1.75rem] border border-hair bg-white shadow-[0_36px_70px_-52px_rgba(6,37,74,0.95)] sm:h-[520px] lg:h-full lg:min-h-[560px]"
+            className="h-[440px] scroll-mt-40 overflow-hidden rounded-xl border border-hair bg-white shadow-[0_36px_70px_-52px_rgba(6,37,74,0.95)] sm:h-[520px] lg:h-full lg:min-h-[560px]"
           >
             <BranchMap
               branches={withDistance}

@@ -275,7 +275,7 @@ export function BranchMap({
       {/* Selected-branch detail card */}
       {selected && (
         <div
-          className="absolute inset-x-3 bottom-3 z-[500] overflow-hidden rounded-2xl border border-navy/15 bg-white/97 shadow-[0_30px_60px_-34px_rgba(6,37,74,0.9)] backdrop-blur-md"
+          className="absolute inset-x-3 bottom-3 z-[500] overflow-hidden rounded-xl border border-navy/15 bg-white/97 shadow-[0_30px_60px_-34px_rgba(6,37,74,0.9)] backdrop-blur-md"
           role="dialog"
           aria-label={`Branch details: ${selected.name}`}
         >
@@ -284,7 +284,7 @@ export function BranchMap({
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="plate-label inline-flex items-center gap-1.5 text-cyan-deep">
+                  <p className="eyebrow text-cyan-deep">
                     <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                     {selected.region} · {selected.city}
                     {selected.distance != null && (

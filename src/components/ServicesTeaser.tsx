@@ -18,11 +18,11 @@ export function ServicesTeaser({ services }: { services: Service[] }) {
   const open = () => window.dispatchEvent(new CustomEvent("sbi:open-services"));
 
   return (
-    <section id="services" className="scroll-mt-32 border-t border-hair bg-white">
+    <section id="services" className="scroll-mt-32 bg-white">
       <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:py-20">
-        <div className="flex flex-col gap-8 rounded-[1.75rem] border border-hair bg-paper p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-8 rounded-xl border border-hair bg-paper p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+            <p className="eyebrow text-cyan-deep">
               <Snowflake className="h-4 w-4" aria-hidden="true" />
               03 / Cold-chain inventory
             </p>
@@ -47,7 +47,7 @@ export function ServicesTeaser({ services }: { services: Service[] }) {
               return (
                 <li
                   key={g.key}
-                  className="flex items-center gap-3 rounded-2xl border border-hair bg-white p-3.5"
+                  className="flex items-center gap-3 rounded-xl border border-hair bg-white p-3.5"
                 >
                   <span
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${g.tone}`}

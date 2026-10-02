@@ -21,7 +21,7 @@ export function CustomSections({ sections }: { sections: CmsSection[] }) {
         const vid = srcOf(s.videoUrl);
         const flip = i % 2 === 1;
         return (
-          <section key={s.slug} className="scroll-mt-32 border-t border-hair bg-paper">
+          <section key={s.slug} className="scroll-mt-32 bg-paper">
             <div
               className={`mx-auto grid max-w-[1400px] items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:py-20 ${
                 flip ? "[&>*:first-child]:order-2" : ""
@@ -29,7 +29,7 @@ export function CustomSections({ sections }: { sections: CmsSection[] }) {
             >
               <div>
                 {s.eyebrow && (
-                  <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-white px-3.5 py-2 text-cyan-deep shadow-sm">
+                  <p className="eyebrow text-cyan-deep">
                     <ImagePlay className="h-4 w-4" aria-hidden="true" />
                     {s.eyebrow}
                   </p>
@@ -48,7 +48,7 @@ export function CustomSections({ sections }: { sections: CmsSection[] }) {
                 )}
               </div>
               {(img || vid) && (
-                <div className="relative overflow-hidden rounded-[1.75rem] bg-navy-deep shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
+                <div className="relative overflow-hidden rounded-xl bg-navy-deep shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
                   {vid ? (
                     <video
                       src={vid}

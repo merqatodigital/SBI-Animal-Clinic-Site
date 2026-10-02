@@ -120,7 +120,7 @@ export function Footer({
         </div>
 
         {/* Tagline */}
-        <div className="mt-14 rounded-[1.75rem] border border-white/12 bg-white/6 px-5 py-8 sm:px-8">
+        <div className="mt-14 rounded-xl border border-white/12 bg-white/6 px-5 py-8 sm:px-8">
           <p className="text-[clamp(2rem,7vw,4.8rem)] leading-none font-extrabold tracking-[-0.04em] text-white">
             {f.taglineA} <span className="text-cyan">{f.taglineB}</span>
           </p>
@@ -134,7 +134,7 @@ export function Footer({
         </div>
 
         {/* Developer credit */}
-        <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-white/12 bg-white/5 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 rounded-xl border border-white/12 bg-white/5 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="flex items-center gap-2.5 text-[13px] text-white/70">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan text-navy-deep">
               <Code2 className="h-4 w-4" aria-hidden="true" />

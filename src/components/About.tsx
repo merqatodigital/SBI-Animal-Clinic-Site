@@ -12,11 +12,11 @@ const MILESTONES = [
 
 export function About({ executives }: { executives: Executive[] }) {
   return (
-    <section id="about" className="scroll-mt-32 border-t border-hair bg-white">
+    <section id="about" className="scroll-mt-32 bg-white">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <div>
-            <p className="plate-label inline-flex items-center gap-2 rounded-full border border-hair bg-paper px-3.5 py-2 text-cyan-deep">
+            <p className="eyebrow text-cyan-deep">
               <CalendarHeart className="h-4 w-4" aria-hidden="true" />
               05 / About us
             </p>
@@ -33,7 +33,7 @@ export function About({ executives }: { executives: Executive[] }) {
               post-exposure algorithm and a booking standard that are identical in every room.
             </p>
 
-            <div className="mt-8 rounded-[1.5rem] border border-hair bg-paper p-2">
+            <div className="mt-8 rounded-xl border border-hair bg-white p-2">
               <ol>
                 {MILESTONES.map(([year, title, body], i) => (
                   <li
@@ -60,7 +60,7 @@ export function About({ executives }: { executives: Executive[] }) {
           </div>
 
           <div>
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-hair shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
+            <div className="relative overflow-hidden rounded-xl border border-hair shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="images/clinic-interior.jpg"
@@ -68,7 +68,7 @@ export function About({ executives }: { executives: Executive[] }) {
                 className="h-64 w-full object-cover sm:h-80"
                 loading="lazy"
               />
-              <div className="absolute inset-x-3 bottom-3 flex flex-wrap gap-3 rounded-2xl bg-white/95 px-4 py-3 backdrop-blur-md">
+              <div className="absolute inset-x-3 bottom-3 flex flex-wrap gap-3 rounded-xl bg-white/95 px-4 py-3 backdrop-blur-md">
                 <SealBadge label="DOH Certified" sub="PEP-compliant" />
                 <SealBadge label="PhilHealth ABPP" sub="CY 2026" color="#12833F" />
               </div>

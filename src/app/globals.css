@@ -9,8 +9,8 @@
   --color-cyan-soft: #d7f2fd;
   --color-alert: #e31e24;
   --color-alert-deep: #a8141a;
-  --color-paper: #f8f9fa;
-  --color-hair: #dce5ef;
+  --color-paper: #fafbfc;
+  --color-hair: #e6ecf3;
   --color-steel: #5a7599;
   --color-leaf: #12833f;
 
@@ -22,8 +22,8 @@
 
 :root {
   color-scheme: light;
-  --r-card: 1.25rem;
-  --r-input: 0.9rem;
+  --r-card: 0.75rem;
+  --r-input: 0.5rem;
 }
 
 html {
@@ -65,6 +65,24 @@ h4 {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+/* Flat section eyebrow — replaces the bordered/shadowed pill so section
+   headers read as open editorial type instead of another box. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.eyebrow svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
 
 .tabular {
@@ -296,7 +314,7 @@ h4 {
 [data-wizard] input:not([type="color"]),
 [data-wizard] select,
 [data-wizard] textarea {
-  border-radius: 0.9rem !important;
+  border-radius: var(--r-input) !important;
 }
 [data-wizard] input:focus,
 [data-wizard] select:focus,
