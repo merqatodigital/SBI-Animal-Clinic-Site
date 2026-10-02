@@ -105,7 +105,12 @@ h4 {
   line-height: 1;
   padding: 0.95rem 1.5rem;
   cursor: pointer;
-  white-space: nowrap;
+  /* Below sm a nowrap pill reports a min-content width larger than a 375px
+     viewport, which pushes its grid/flex parent past the screen and gives the
+     page a horizontal scrollbar. Letting the label wrap (with looser leading
+     so two lines still breathe) keeps buttons inside their track. */
+  white-space: normal;
+  line-height: 1.3;
   box-shadow: 0 1px 2px rgba(4, 24, 47, 0.06);
   transition:
     transform 0.18s var(--ease-plate),
@@ -129,6 +134,13 @@ h4 {
 }
 .btn svg {
   flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .btn {
+    white-space: nowrap;
+    line-height: 1;
+  }
 }
 
 .btn-primary {

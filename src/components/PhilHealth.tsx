@@ -33,7 +33,9 @@ export function PhilHealth() {
     <section id="philhealth" className="scroll-mt-32 bg-paper">
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-          <div>
+          {/* min-w-0: grid items default to min-width:auto, so a wide child
+              could otherwise widen the track past the viewport on mobile. */}
+          <div className="min-w-0">
             <p className="eyebrow text-cyan-deep">
               <Wallet className="h-4 w-4" aria-hidden="true" />
               04 / Coverage
@@ -86,7 +88,7 @@ export function PhilHealth() {
             </a>
           </div>
 
-          <aside className="rounded-xl bg-navy p-6 text-white shadow-[0_40px_80px_-56px_rgba(6,37,74,1)] sm:p-8">
+          <aside className="min-w-0 rounded-xl bg-navy p-6 text-white shadow-[0_40px_80px_-56px_rgba(6,37,74,1)] sm:p-8">
             <p className="plate-label flex items-center gap-2 text-cyan">
               <BadgeCheck className="h-4 w-4" aria-hidden="true" />
               Accreditation
