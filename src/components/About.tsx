@@ -1,6 +1,7 @@
 import { CalendarHeart, Building2, ArrowRight, Award, BadgeCheck } from "lucide-react";
 import type { Executive } from "@/lib/types";
 import { SealBadge } from "./Logo";
+import { SmartImage } from "./SmartImage";
 
 const MILESTONES = [
   ["2010", "Founded in Antipolo City", "SBI Medical & Animal Bite Center & Vaccination Clinic opens its first site across from Antipolo District Hospital."],
@@ -60,9 +61,8 @@ export function About({ executives }: { executives: Executive[] }) {
           </div>
 
           <div>
-            <div className="relative overflow-hidden rounded-xl border border-hair shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative min-h-64 overflow-hidden rounded-xl border border-hair bg-[radial-gradient(120%_90%_at_20%_15%,#d7f2fd_0%,#f8f9fa_70%)] shadow-[0_36px_70px_-52px_rgba(6,37,74,0.9)] sm:min-h-80">
+              <SmartImage
                 src="images/clinic-interior.jpg"
                 alt="Empty waiting area of an SBI clinic with pale blue chairs and a navy accent wall"
                 className="h-64 w-full object-cover sm:h-80"
