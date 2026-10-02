@@ -64,7 +64,9 @@ export function SiteHeader({
             </span>
             {h.bannerText}
           </p>
-          <div className="flex shrink-0 items-center gap-2">
+          {/* flex-wrap: the two pills do not fit side by side on a 375px
+              screen, so the CTA drops to its own line instead of overflowing. */}
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
             <a
               href={h.phoneHref}
               className="tabular btn btn-sm !border-white/50 !bg-transparent !text-white hover:!bg-white hover:!text-alert"
